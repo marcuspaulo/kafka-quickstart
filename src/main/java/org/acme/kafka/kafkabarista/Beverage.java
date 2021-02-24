@@ -1,4 +1,4 @@
-package org.acme.kafka.model;
+package org.acme.kafka.kafkabarista;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

@@ -1,4 +1,4 @@
-package org.acme.kafka.model;
+package org.acme.kafka.kafkabarista;
 
 import io.smallrye.reactive.messaging.annotations.Blocking;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.Random;
 
-import static org.acme.kafka.model.Names.pickAName;
+import static org.acme.kafka.kafkabarista.Names.pickAName;
 
 @ApplicationScoped
 public class KafkaBarista {
@@ -19,15 +19,18 @@ public class KafkaBarista {
     private String name = pickAName();
 
     @Incoming("orders")
-    @Outgoing("queue")
+//    @Outgoing("queue")
     @Blocking
     public Beverage process(Order order) {
+        LOGGER.info("=====================> Order {} for {} is ready", order.getProduct(), order.getName());
         return prepare(order);
     }
 
     Beverage prepare(Order order) {
         int delay = getPreparationTime();
+        LOGGER.info("=====================> 1 - Order {} for {} is ready", order.getProduct(), order.getName());
         try {
+            LOGGER.info("=====================> 2 - Order {} for {} is ready", order.getProduct(), order.getName());
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
